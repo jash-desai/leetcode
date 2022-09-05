@@ -36,8 +36,8 @@ public:
                 if(q.front()==NULL) break;
             }else{
                 t.push_back(cur->val);
-                for(int i=0; i<cur->children.size(); i++){
-                    if(cur->children[i]!=NULL) q.push(cur->children[i]);
+                for(auto x : cur->children){
+                    if(x) q.push(x);
                 }
             }
         }
