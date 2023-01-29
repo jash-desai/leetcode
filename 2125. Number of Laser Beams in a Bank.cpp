@@ -3,8 +3,8 @@ public:
     int numberOfBeams(vector<string> &v) {
         int ans = 0;
         int prevOnes = 0;
-        for (const string &row : v) {
-            const int ones = count(begin(row), end(row), '1');
+        for (string s : v) {
+            int ones = count(begin(s), end(s), '1');
             if (ones > 0) {
                 ans += prevOnes * ones;
                 prevOnes = ones;
