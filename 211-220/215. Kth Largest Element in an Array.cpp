@@ -6,7 +6,6 @@ public:
             m.insert(x);
         }
         multiset<int>::iterator it = m.end();
-        // --k;
         while(k--){
             --it;
         }
