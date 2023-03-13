@@ -12,10 +12,10 @@
 class Solution {
 public:
     bool rec(TreeNode* root1,TreeNode* root2){
-        if(root1==0 and root2==0){
+        if(root1==nullptr and root2==nullptr){
             return true;
         }
-        if(root1==0 or root2==0 or root1->val != root2->val){
+        if(root1==nullptr or root2==nullptr or root1->val != root2->val){
             return false;
         }
         return (rec(root1->left, root2->right) and rec(root1->right, root2->left));
