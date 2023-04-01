@@ -3,7 +3,7 @@ public:
     int search(vector<int>&v, int k) {
         int n=v.size();
         int i=0, j=n-1, p=0;
-        while(i<n and j>-1 and i<=j){
+        while(i<=j){
             p=(i+j)/2;
             if(v[p]==k){
                 return p;
