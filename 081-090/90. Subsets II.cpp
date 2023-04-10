@@ -1,16 +1,12 @@
 class Solution {
 public:
     void rec(vector<int>&v, vector<vector<int>>&a, vector<int>&t, int idx){
-        bool f=false;
-         vector<vector<int>>::iterator it;
-        it=find(a.begin(), a.end(), t);
-        f = (it==a.end()) ? false : true;
-        if(!f) a.push_back(t);
-        if(idx==v.size()) return;
+        a.push_back(t);
         for(int i=idx; i<v.size(); i++){
-            vector<int> temp(t);
-            temp.push_back(v[i]);
-            rec(v,a,temp,i+1);
+            if(i!=idx and v[i]==v[i-1]) continue;
+            t.push_back(v[i]);
+            rec(v,a,t,i+1);
+            t.erase(t.end()-1);
         }
     }
     

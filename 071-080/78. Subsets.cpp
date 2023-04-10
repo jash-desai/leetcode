@@ -4,9 +4,9 @@ public:
         a.push_back(t);
         if(idx==v.size()) return;
         for(int i=idx; i<v.size(); i++){
-            vector<int> temp(t);
-            temp.push_back(v[i]);
-            rec(v,a,temp,i+1);
+            t.push_back(v[i]);
+            rec(v,a,t,i+1);
+            t.erase(t.end()-1);
         }
     }
     
