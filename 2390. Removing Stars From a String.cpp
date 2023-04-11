@@ -1,9 +1,8 @@
 class Solution {
 public:
     string removeStars(string s) {
-        int n=s.size();
         int i=0, j=0;
-        while(i<n){
+        while(i<s.size()){
             if(s[i] != '*' and i==j){
                 i++, j++;
             }else if(i!=j and s[i] != '*'){
