@@ -5,9 +5,7 @@ public:
         vector<bool> a(n);
         int m = *max_element(v.begin(), v.end());
         for(int i=0; i<n; i++){
-            if(v[i]+k >= m){
-                a[i]=1;
-            }
+            a[i]=((v[i]+k) >= m);
         }
         return a;
     }
