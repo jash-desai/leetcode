@@ -14,7 +14,7 @@ public:
         // }
         // return sum; 
 
-        // optimized math -
+        // optimized math - O(1)
         if(n==0) return 0;
         return (n%9) ? (n%9) : 9;
     }
