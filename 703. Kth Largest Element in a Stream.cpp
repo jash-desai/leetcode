@@ -1,14 +1,10 @@
 class KthLargest {
 public:
-
-    KthLargest(int k, vector<int>& nums) {
-        K =k;
-        for(int i=0;i<nums.size();i++){
-            pq.push(nums[i]);
-        }
+    KthLargest(int k, vector<int>& v) {
+        K = k;
+        for(int i=0;i<v.size();i++) pq.push(v[i]);
         while(pq.size() > k) pq.pop();
     }
-    
     int add(int val) {
         pq.push(val);
         if(pq.size() > K)  pq.pop();
