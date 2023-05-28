@@ -1,19 +1,19 @@
 class Solution {
 public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int> colors(n);
+    bool isBipartite(vector<vector<int>>&m) {
+        int n = m.size();
+        vector<int> vis(n,-1);
         for(int i=0; i<n; i++){
-            if(colors[i]) continue;
-            queue<int> q{{i}};
-            colors[i] = 1;
-            while(!q.empty()){
-                int curr = q.front(); q.pop();
-                for(int neighbor : graph[curr]){
-                    if(colors[neighbor] == colors[curr]) return false;
-                    if(colors[neighbor] == 0){
-                        colors[neighbor] = -colors[curr];
-                        q.push(neighbor);
+            if(vis[i]==-1){
+                queue<int> q; vis[i] = 0; q.push(i);
+                while(!q.empty()){
+                    int u = q.front(); q.pop();
+                    for(int v : m[u]){
+                        if(vis[v] == vis[u]) return false;
+                        if(vis[v] == -1){
+                            vis[v] = 1-vis[u];
+                            q.push(v);
+                        }
                     }
                 }
             }
