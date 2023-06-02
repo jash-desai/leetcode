@@ -1,42 +1,34 @@
 #define ll long long int
 class Solution {
-    public:
-    void dfs(vector<vector<int>> &gr,vector<bool> &visited,int &c,int &i) {
-        visited[i]=true;
-        c++;
-        for(int j=0;j<gr[i].size();j++) {
-            if(!visited[gr[i][j]])
-                dfs(gr,visited,c,gr[i][j]);   
-        }
-    }
-
-    int maximumDetonation(vector<vector<int>>& bombs) {
-        int n=bombs.size();
-        vector<vector<int> > gr(n);
-        for(int i=0;i<n;i++) {
-            ll x1,y1,r1;
-            x1=bombs[i][0];
-            y1=bombs[i][1];
-            r1=bombs[i][2];
-            for(int j=0;j<n;j++) {
-                if(i!=j) {
-                    ll x,y;
-                    x=abs(x1-bombs[j][0]);
-                    y=abs(y1-bombs[j][1]);
-                    if(x*x+y*y<=r1*r1)
-                        gr[i].push_back(j);
-                }
+private:
+    void dfs(vector<vector<int>>&adj,vector<bool>&vis,int u, int&c){
+        vis[u]=1; c++;
+        for(int v : adj[u]){
+            if(!vis[v]){
+                dfs(adj,vis,v,c);
             }
         }
-
-        int ans=INT_MIN;
-        for(int i=0;i<n;i++) {
-            int c=0;
-            vector<bool> visited(n,false);
-            dfs(gr,visited,c,i);
-            ans=max(ans,c);
+        return;
+    }
+public:
+    int maximumDetonation(vector<vector<int>>&v) {
+        int n=v.size(); vector<vector<int>> adj(n);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                ll x = abs(v[i][0]-v[j][0]);
+                ll y = abs(v[i][1]-v[j][1]);
+                ll r = abs(v[i][2]);
+                if((x*x)+(y*y) <= (r*r)) adj[i].push_back(j);
+            }
         }
-
-        return ans;
+        int a = INT_MIN;
+        for(int i=0; i<n; i++){
+            vector<bool> vis(n,0); int c=0;
+            if(!vis[i]){
+                dfs(adj,vis,i,c);
+                a = max(a,c);
+            }
+        }
+        return a;
     }
 };
