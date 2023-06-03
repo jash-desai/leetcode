@@ -1,19 +1,12 @@
 class Solution {
 public:
     string mergeAlternately(string a, string b) {
-        string s;
-        int i=0, j=0;
-        while(i<a.size() && j<b.size()){
-            s.push_back(a[i++]);
-            s.push_back(b[j++]);
+        string ans = ""; int i=0, j=0;
+        while(i<a.length() or j<b.length()){
+            if(i<a.length()) ans += a[i];
+            if(j<b.length()) ans+=b[j];
+            i++; j++;
         }
-        while(i<a.size()){
-            s.push_back(a[i++]);
-        }
-        while(j<b.size()){
-            s.push_back(b[j++]);
-        }
-
-        return s;
+        return ans;
     }
 };
