@@ -23,8 +23,7 @@ public:
         vector<bool> vis(n,0); int c=0;
         for(int i=0; i<n; i++){
             if(!vis[i]){
-                dfs(adj,vis,i);
-                c++;
+                dfs(adj,vis,i); c++;
             }
         }
         return c;
