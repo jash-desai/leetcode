@@ -1,30 +1,33 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
-public:
-    void helper(TreeNode* root, vector<int>& storeNodeVal) {
-        if(root == nullptr)
-            return;
-        helper(root -> left, storeNodeVal);
-        storeNodeVal.push_back(root -> val);
-        helper(root -> right, storeNodeVal);
+private:
+/* - O(N) SC: -
+
+    void rec(TreeNode* root, vector<int>&v) {
+        if(!root) return;
+        rec(root -> left, v);
+        v.push_back(root -> val);
+        rec(root -> right, v);
     }
-    int minDiffInBST(TreeNode* root) {
-        vector<int> storeNodeVal;
-        helper(root, storeNodeVal);
-        int minDiff = INT_MAX;
-        for (int i = 0; i < storeNodeVal.size()-1; i++) {
-            minDiff = min(minDiff, storeNodeVal[i+1] - storeNodeVal[i]);
-        }
-        return minDiff;
+*/
+//   - O(1) SC: -
+    void rec(int&a, int&pr, TreeNode* root) {
+        if(!root) return;
+        rec(a, pr, root->left);
+        if(pr != INT_MIN) a = min(a, abs(root->val - pr));
+        pr = root->val;
+        rec(a, pr, root->right);
+    }
+public:
+    int getMinimumDifference(TreeNode* root) {
+/* - O(N) SC : -
+        vector<int> v; int a = INT_MAX;
+        rec(root, v);
+        for (int i = 0; i < v.size()-1; i++) a = min(a, v[i+1] - v[i]);
+        return a;
+*/
+        // O(1) SC :
+        int a = INT_MAX, pr = INT_MIN;
+        rec(a,pr,root);
+        return a;
     }
 };
