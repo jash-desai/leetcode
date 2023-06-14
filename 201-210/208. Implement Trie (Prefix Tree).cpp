@@ -2,27 +2,24 @@ class TrieNode {
 public:
     bool isWord;
     TrieNode* children[26];
-    
     TrieNode() {
         isWord = false;
-        memset(children, 0, sizeof(children));
+        memset(children, 0, sizeof children );
     }
 };
 
 class Trie {
 private:
     TrieNode* root;
-    
 public:
-    Trie() {
+    Trie(){
         root = new TrieNode();
     }
-    
     void insert(string word) {
         TrieNode* node = root;
-        for (char c : word) {
+        for(char c : word){
             int index = c - 'a';
-            if (!node->children[index]) {
+            if(!node->children[index]){
                 node->children[index] = new TrieNode();
             }
             node = node->children[index];
@@ -32,23 +29,19 @@ public:
     
     bool search(string word) {
         TrieNode* node = root;
-        for (char c : word) {
+        for(char c : word){
             int index = c - 'a';
-            if (!node->children[index]) {
-                return false;
-            }
+            if(!node->children[index]) return 0;
             node = node->children[index];
         }
-        return node->isWord;
+        return (node->isWord);
     }
     
     bool startsWith(string prefix) {
         TrieNode* node = root;
-        for (char c : prefix) {
+        for(char c : prefix){
             int index = c - 'a';
-            if (!node->children[index]) {
-                return false;
-            }
+            if(!node->children[index]) return 0;
             node = node->children[index];
         }
         return true;
