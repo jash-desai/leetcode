@@ -12,23 +12,19 @@
 class Solution {
 public:
     int maxLevelSum(TreeNode* root) {
-        int maxSum = INT_MIN; queue<TreeNode*> nxtLvl;
-        queue<TreeNode*> q; q.push(root); 
-        int lvl = 1, ans = -1;
+        int maxSum = INT_MIN; queue<TreeNode*> q; 
+        q.push(root); int lvl = 1, ans = -1;
         while(!q.empty()){
             int sz = q.size(); int currSum = 0;
-            for(int i=0; !q.empty() and i<sz; i++){
+            for(int i=0; i<sz; i++){
                 TreeNode* curr = q.front(); q.pop();
                 currSum += curr->val;
-                if(curr->left) nxtLvl.push(curr->left);
-                if(curr->right) nxtLvl.push(curr->right);
+                if(curr->left) q.push(curr->left);
+                if(curr->right) q.push(curr->right);
             }
-            if(q.empty()){
-                swap(q, nxtLvl);
-                if(currSum > maxSum){
-                    ans = lvl;
-                    maxSum = currSum;
-                }
+            if(currSum > maxSum){
+                ans = lvl;
+                maxSum = currSum;
             }
             lvl++;
         }
