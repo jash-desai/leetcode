@@ -14,6 +14,7 @@ public:
         int n=v.size();
         if(k==0) return 1;
         if(n==1 and v[0]==k) return 1;
+        /*
         vector<vector<int>> dp(n+1, vector<int>(k+1, 0));
         // return rec(v,n,k,dp);
         for(int j=0; j<=k; j++) dp[0][j] = 0;
@@ -27,5 +28,20 @@ public:
             }
         }
         return dp[n][k];
+        */
+        vector<int> curr(k+1, 0), prev(k+1,0);
+        curr[0]=1; prev[0]=1;
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=k; j++){
+                int ans1 = prev[j];
+                int ans2 = 0;
+                if(j-v[i-1] >=0) ans2 = curr[j-v[i-1]];
+                curr[j] = ans1 + ans2;
+            }
+            prev = curr;
+            fill(begin(curr), end(curr), 0);
+            curr[0]=1;
+        }
+        return prev[k];
     }
 };
