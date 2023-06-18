@@ -3,18 +3,13 @@ class Solution {
 private:
     // vector<vi> dp;
     vi dp2;
-    // 2d DP matrix - not needed.
     // int rec(vi&v, int k, int n ){
     //     if(k==0) return 0;
     //     if(n==0 or k<0) return INT_MAX;
-    //     if(dp[n][k] != -2) return dp[n][k];
-    //     // skipping nth coin - not including
+    //     if(dp[n][k] != -1) return dp[n][k];
     //     int a = rec(v,k,n-1);
-    //     // taking nth coin - target k updated : n same
-    //     int t = rec(v, k-v[n-1], n);
-    //     int b;
-    //     if(t==INT_MAX) b=INT_MAX;
-    //     else b = 1+t;
+    //     int b = INT_MAX;
+    //     if(k-v[n-1] >= 0) b = 1 + rec(v, k-v[n-1], n);
     //     return dp[n][k] = min(a,b);
     // }
 public:
@@ -22,11 +17,10 @@ public:
         if(k==0) return k;
         int n=v.size();
         if(n==0) return -1;
-        // iterative 2d dp : 
         // dp.resize(n+1, vi(k+1,INT_MAX));
+        // return rec(v,k,n) == INT_MAX ? -1 : dp[n][k];
         // for(int i=0; i<k+1; i++) dp[0][i]=-1;
         // for(int i=0; i<n+1; i++) dp[i][0]=0;
-        // return rec(v,k,n) == INT_MAX ? -1 : dp[n][k];
         // for(int i=1; i<n+1; i++){
         //     for(int j=1; j<k+1; j++){
         //         int a = dp[i-1][j];
@@ -38,17 +32,19 @@ public:
         //     }
         // }
         // return dp[n][k]==INT_MAX ? -1 : dp[n][k];
-        dp2.resize(k+1,INT_MAX);
-        dp2[0]=0;
-        // iterative 1d dp : 
-        for(int i=1; i<k+1; i++){
-            for(int j=0; j<n; j++){
-                if(v[j] <= i){
-                    int t = dp2[i-v[j]];
-                    if(t!=INT_MAX) dp2[i] = min(dp2[i], 1+t);
-                }
+        vector<int> curr(k+1, INT_MAX), prev(k+1,INT_MAX);
+        prev[0]=0; curr[0]=0;
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=k; j++){
+                int ans1 = prev[j];
+                int ans2 = INT_MAX;
+                if(j-v[i-1] >= 0) ans2 = curr[j-v[i-1]];
+                if(ans2 != INT_MAX) ans2++;
+                curr[j] = min(ans1, ans2);
             }
+            prev = curr;
+            fill(begin(curr), end(curr), 0);
         }
-        return dp2[k] == INT_MAX ? -1 : dp2[k];
+        return prev[k]==INT_MAX ? -1 : prev[k];
     }
 };
