@@ -1,11 +1,10 @@
 class Solution {
 public:
     int largestAltitude(vector<int> &v) {
-        int a=0;
-        int s=0;
+        int a=0; int s=0;
         for(int x:v){
             s += x;
-            a = max(a,s);
+            if(s>a) a=s;
         }
         return a;
     }
