@@ -15,8 +15,8 @@ private:
 public:
     int minDistance(string a, string b) {
         int n = a.size(), m = b.size();
-        if(n==0) return m;
-        if(m==0) return n;
-        return (n-lcs(a,b,n,m)) + (m-lcs(a,b,n,m));
+        if(n==0 or m==0) return (!n) ? m : n;
+        int x = lcs(a,b,n,m);
+        return (n-x) + (m-x);
     }
 };
