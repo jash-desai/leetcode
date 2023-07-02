@@ -1,25 +1,25 @@
+#define all(x) begin(x),end(x)
+#define maxele max_element
 class Solution {
 public:
-    int ans = INT_MAX; int n;
-    void solve(int idx, vector<int>&v, vector<int>&temp, int k){
+    int ans = INT_MAX; int n; int k;
+    void solve(int idx, vector<int>&v, vector<int>&temp){
         if(idx == n){
-            int maxm = INT_MIN;
-            for(int i=0; i<k; i++){
-                maxm = max(maxm,temp[i]);
-            }
+            int maxm = *maxele(all(temp));
             ans = min(ans,maxm);
             return;
         }
         for(int i=0; i<k; i++){
             temp[i] += v[idx];
-            solve(idx+1,v,temp,k);
+            solve(idx+1,v,temp);
             temp[i] -= v[idx];
+            if(v[i]==0) break;
         }
     }
     
-    int distributeCookies(vector<int>& v, int k) {
-        n = v.size(); vector<int> temp(k,0);
-        solve(0,v,temp,k);
+    int distributeCookies(vector<int>& v, int K) {
+        n = size(v); k = K; vector<int> temp(k,0);
+        solve(0,v,temp);
         return ans;
     }
 };
