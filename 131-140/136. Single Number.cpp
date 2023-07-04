@@ -3,13 +3,9 @@ class Solution {
 public:
     int singleNumber(vector<int>& v) {
         map<int,int> m;
-        for(int x:v){
-            m[x]++;
-        }
+        for(int x:v) m[x]++;
         for(auto x:m){
-            if(x.second == 1){
-                return x.first;
-            }
+            if(x.second == 1) return x.first;
         }
         return -1;
     }
