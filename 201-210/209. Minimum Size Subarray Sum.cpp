@@ -13,6 +13,7 @@ public:
     int minSubArrayLen(int k, vector<int>&v){
         int curr = 0; for(int x:v) curr += x;
         if(curr<k) return 0;
+        /*
         int l = 1, r = size(v), m, ans;
         while(l<=r){
             m = (l + ((r-l) >> 1));
@@ -20,6 +21,17 @@ public:
                 ans = m;
                 r = m-1;
             }else l = m+1;
+        }
+        return ans;
+        */
+        curr = 0; int ans = INT_MAX, i = 0, j = 0;
+        while(j<size(v)){
+            curr += v[j];
+            while(curr >= k){
+                ans = min(ans, j-i+1);
+                curr -= v[i++];
+            }
+            j++;
         }
         return ans;
     }
