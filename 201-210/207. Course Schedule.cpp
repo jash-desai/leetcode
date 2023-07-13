@@ -1,7 +1,8 @@
 #define pii pair<int,int>
+#define vvi vector<vector<int>>
 class Solution {
 private:
-    bool dfs(vector<vector<int>>&adj,vector<bool>&vis,unordered_set<int>&s, int u){
+    bool dfs(vvi&adj, vector<bool>&vis, unordered_set<int>&s, int u){
         vis[u]=1; s.insert(u);
         for(int v : adj[u]){
             if(!vis[v]){
