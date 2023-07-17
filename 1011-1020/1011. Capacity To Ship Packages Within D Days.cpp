@@ -1,28 +1,23 @@
 class Solution {
+private:
+    bool fxn(vector<int>&v, int&m, int &k){
+        int c = 0; int d = 1;
+        for(int x : v){
+            if(c+x <= m) c += x;
+            else c = x, d++;
+        }
+        return (d<=k);
+    }
 public:
-    int shipWithinDays(vector<int>& weights, int days) {
-        int maxWeight = -1, totalWeight = 0;
-        for (int weight : weights) {
-            maxWeight = max(maxWeight, weight);
-            totalWeight = totalWeight + weight;
+    int shipWithinDays(vector<int>&v, int k) {
+        int l = *max_element(begin(v), end(v));
+        int r = 0; for(int x : v) r += x;
+        int ans = 0, m = 0;
+        while(l<=r){
+            m = l + ((r-l) >> 1);
+            if(fxn(v,m,k)) ans = m, r = m-1;
+            else l = m+1;
         }
-        //here weight and total weight work as left and right pointer of bunary search
-        while (maxWeight < totalWeight) {
-            int midWeight = maxWeight + (totalWeight - maxWeight) / 2;
-            int daysNeeded = 1, currWeight = 0;
-            for (int weight : weights) {
-                if (currWeight + weight > midWeight) {
-                    daysNeeded++;
-                    currWeight = 0;
-                }
-                currWeight = currWeight + weight;
-            }
-            if (daysNeeded > days) {
-                maxWeight = midWeight + 1;
-            } else {
-                totalWeight = midWeight;
-            }
-        }
-        return maxWeight;
+        return ans;
     }
 };
