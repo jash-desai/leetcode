@@ -1,42 +1,33 @@
 class Solution {
 public:
-    int minJumps(vector<int>& arr) 
-    {
-        int n = arr.size();
-        unordered_map<int, vector<int>>mp;
-        for (int i = 0; i < n; i++) mp[arr[i]].push_back(i);
-        
-        queue<int>q;
-        vector<bool>visited(n, false);
-        q.push(0);
-        int steps = 0;
-        while(!q.empty())
-        {
-            int size = q.size();
-            while(size--)
-            {
-                int currIdx = q.front();
-                q.pop();
-                if (currIdx == n - 1) return steps;
-                if (currIdx + 1 < n && !visited[currIdx + 1])
-                {
-                    visited[currIdx + 1] = true;
-                    q.push(currIdx + 1);
+    int minJumps(vector<int>& arr){
+        int n = size(arr); unordered_map<int, vector<int>> mp;
+        for(int i=0; i<n; i++) mp[arr[i]].push_back(i);
+        queue<int> q; vector<bool> vis(n, false); 
+        q.push(0); vis[0] = true; int steps = 0;
+        while(!q.empty()){
+            int sz = size(q);
+            while(sz--){
+                int idx = q.front(); q.pop();
+                if(idx == n-1) return steps;
+                // condition 1 :
+                if(idx+1 < n and !vis[idx+1]){
+                    vis[idx+1] = true;
+                    q.push(idx+1);
                 }
-                if (currIdx - 1 >= 0 && !visited[currIdx - 1]) 
-                {
-                    visited[currIdx - 1] = true;
-                    q.push(currIdx - 1);
+                // condition 2 :
+                if(idx-1 >= 0 and !vis[idx-1]){
+                    vis[idx-1] = true;
+                    q.push(idx-1);
                 }
-                for (int newIdx : mp[arr[currIdx]])
-                {
-                    if (!visited[newIdx]) 
-                    {
-                        visited[newIdx] = true;
-                        q.push(newIdx);
+                // condition 3 :
+                for(int i : mp[arr[idx]]){
+                    if(!vis[i]){
+                        vis[i] = true; 
+                        q.push(i);
                     }
                 }
-                mp[arr[currIdx]].clear();
+                mp[arr[idx]].clear();
             }
             steps++;
         }
