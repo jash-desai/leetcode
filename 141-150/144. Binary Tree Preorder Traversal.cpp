@@ -12,10 +12,19 @@ public:
         vector<int> ans; // rec(root, ans); return ans;
         stack<TreeNode*> st; st.push(root);
         while(!st.empty()){
-            TreeNode* curr = st.top(); st.pop();
-            ans.push_back(curr->val);
-            if(curr->right) st.push(curr->right);
-            if(curr->left) st.push(curr->left);
+            TreeNode* curr = st.top();
+            if(curr){
+                ans.push_back(curr->val);
+                st.pop();
+            }
+            if(curr->right){
+                st.push(curr->right); 
+                curr->right = NULL;
+            }
+            if(curr->left){
+                st.push(curr->left); 
+                curr->left = NULL;
+            }
         }
         return ans;
     }
