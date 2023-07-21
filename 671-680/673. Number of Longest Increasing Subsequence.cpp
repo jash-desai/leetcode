@@ -6,7 +6,7 @@ public:
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
                 if(v[i]>v[j]){
-                    if(dp[i]<1+dp[j]){
+                    if(dp[i] < 1+dp[j]){
                         dp[i] = 1+dp[j];
                         cnt[i] = cnt[j];
                     }else if(dp[i]==1+dp[j]){
@@ -18,7 +18,7 @@ public:
         }
         int ans = 0;
         for(int i=0; i<n; i++){
-            if(dp[i]==lis) ans +=  cnt[i];
+            if(dp[i]==lis) ans += cnt[i];
         }
         return ans;
     }
