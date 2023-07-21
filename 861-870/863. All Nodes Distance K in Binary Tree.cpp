@@ -2,10 +2,10 @@ class Solution {
 public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int> ans; unordered_map<int, TreeNode*> par;
-        queue<TreeNode*> q; q.push(root);
+        queue<TreeNode*> q; q.push(root); unordered_map<int, int> vis;
         while(!q.empty()){
-            int si = q.size();
-            for(int i = 0; i < si; i++){
+            int n = q.size();
+            while(n--){
                 auto top = q.front(); q.pop();
                 if(top -> left){
                     par[top->left->val] = top;
@@ -17,27 +17,24 @@ public:
                 }
             }
         }
-        unordered_map<int, int> vis; q.push(target);
-        while(k-- && !q.empty()){
-            int size = q.size();
-            for(int i = 0; i < size; i++){
-                auto top = q.front(); q.pop();
-                vis[top -> val] = 1;
-                if(top -> left && !vis[top->left->val]){
-                    q.push(top -> left);
+        q.push(target);
+        while(k-- and !q.empty()){
+            int n = q.size();
+            while(n--){
+                auto curr = q.front(); q.pop();
+                vis[curr->val] = 1;
+                if(curr->left and !vis[curr->left->val]){
+                    q.push(curr->left);
                 }
-                if(top -> right && !vis[top->right->val]){
-                    q.push(top -> right);
+                if(curr->right and !vis[curr->right->val]){
+                    q.push(curr->right);
                 }
-                if(par[top->val] && !vis[par[top->val] -> val]){
-                    q.push(par[top->val]);
+                if(par[curr->val] and !vis[par[curr->val] -> val]){
+                    q.push(par[curr->val]);
                 }
             }
         }
-        while(!q.empty()){
-            ans.push_back(q.front()->val);
-            q.pop();
-        }
+        while(!q.empty()){ ans.push_back(q.front()->val); q.pop(); }
         return ans;
     }
 };

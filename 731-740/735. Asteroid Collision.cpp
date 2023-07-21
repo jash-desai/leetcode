@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>&v) {
-        // brute-force : 
+        /*
         int n = size(v); stack<int> st; vector<int> ans;
         for(int a : v){
             if(st.empty()){ st.push(a); continue; } // first element
@@ -24,9 +24,16 @@ public:
             }
         }
         if(st.empty()) return {};
-        while(!st.empty()){
-            ans.push_back(st.top()); st.pop();
-        }
+        while(!st.empty()){ ans.push_back(st.top()); st.pop(); }
         return vector<int>(rbegin(ans), rend(ans));
+        */
+        int n = size(v), j{0};
+        for(int i{0}; i<n; i++){
+            int b = v[i];
+            while(j>0 and v[j-1]>0 and b<0 and v[j-1]<(-b)) j--;
+            if(j==0 or b>0 or v[j-1]<0) v[j++] = b;
+            else if(v[j-1] == -b) j--;
+        }
+        return vector<int>(begin(v), begin(v)+j);
     }
 };
