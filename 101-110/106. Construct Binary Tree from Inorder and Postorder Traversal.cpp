@@ -1,34 +1,20 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#define vi vector<int>
+#define Node TreeNode
 class Solution {
-public:
-    TreeNode* buildTree(vector<int>& inord, vector<int>& postord) {
-        unordered_map<int, int> mp;
-        for (int i = 0; i < inord.size(); i++) {
-            mp[inord[i]] = i;
-        }
-        return buildTreeHelper(inord, postord, 0, inord.size()-1, 0, postord.size()-1, mp);
-    }
-    
-    TreeNode* buildTreeHelper(vector<int>& inord, vector<int>& postord, int inorderStart, int inorderEnd, int postorderStart, int postorderEnd, unordered_map<int, int>& index) {
-        if (inorderStart > inorderEnd || postorderStart > postorderEnd) {
-            return nullptr;
-        }
-        int rootVal = postord[postorderEnd];
-        TreeNode* root = new TreeNode(rootVal);
-        int inorderRootIndex = index[rootVal];
-        int leftSubtreeSize = inorderRootIndex - inorderStart;
-        root->left = buildTreeHelper(inord, postord, inorderStart, inorderRootIndex - 1, postorderStart, postorderStart + leftSubtreeSize - 1, index);
-        root->right = buildTreeHelper(inord, postord, inorderRootIndex + 1, inorderEnd, postorderStart + leftSubtreeSize, postorderEnd - 1, index);
+    unordered_map<int, int> mp;
+private:
+    Node* rec(vi&pos, int posSt, int posEn, vi&ino, int inoSt, int inoEn){
+        if(posSt>posEn or inoSt>inoEn) return NULL;
+        Node* root = new Node(pos[posEn]);
+        int rootIdx = mp[root->val];
+        int cnt = rootIdx - inoSt;
+        root->left = rec(pos,posSt, posSt+cnt-1, ino, inoSt, rootIdx-1);
+        root->right = rec(pos, posSt+cnt, posEn-1, ino, rootIdx+1, inoEn);
         return root;
+    }
+public:
+    TreeNode* buildTree(vector<int>& ino, vector<int>& pos) {
+        mp.clear(); for(int i{0}; i<size(ino); i++) mp[ino[i]] = i;
+        return rec(pos,0,size(pos)-1,ino,0,size(ino)-1);
     }
 };
