@@ -1,12 +1,8 @@
 class Solution {
 public:
     int dsu(vector<int>& parent,int x){
-        if(parent[x] == x){
-            return x;
-        }
-        else{
-            return parent[x] = dsu(parent,parent[x]);
-        }
+        if(parent[x] == x) return x;
+        return parent[x] = dsu(parent,parent[x]);
     }
     vector<bool> distanceLimitedPathsExist(int n, vector<vector<int>>& edgeList, vector<vector<int>>& queries) {
         ios_base::sync_with_stdio(0);
