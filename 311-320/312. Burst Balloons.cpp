@@ -14,7 +14,19 @@ private:
 public:
     int maxCoins(vector<int>&v) {
         int n = size(v); v.push_back(1); v.insert(v.begin(), 1);
-        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
-        return rec(v,1,n,dp);
+        vector<vector<int>> dp(n+2, vector<int>(n+2, 0));
+        // return rec(v,1,n,dp);
+        for(int i=n; i>=1; i--){
+            for(int j=i; j<=n; j++){
+                int ans = INT_MIN;
+                for(int k=i; k<=j; k++){
+                    int curr = (v[i-1] * v[k] * v[j+1]);
+                    curr += dp[i][k-1] + dp[k+1][j];
+                    ans = max(ans, curr);
+                }
+                dp[i][j] = ans;
+            }
+        }
+        return dp[1][n];
     }
 };
