@@ -22,6 +22,7 @@ public:
 class Solution {
 public:
     void sortColors(vector<int>&v){
+        // dutch flag sorting algo - 
         int lo = 0; 
         int hi = v.size() - 1; 
         int mid = 0;
