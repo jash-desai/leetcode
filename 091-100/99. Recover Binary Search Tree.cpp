@@ -5,12 +5,8 @@ private:
         if(!root) return;
         ino(root->left);
         if(prev and root->val < prev->val){
-            if(!first){
-                first = prev;
-                mid = root;
-            }else{
-                last = root;
-            }
+            if(!first) first = prev, mid = root;
+            else last = root;
         }
         prev = root;
         ino(root->right);
