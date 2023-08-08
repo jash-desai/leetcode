@@ -1,20 +1,16 @@
 class Solution {
 public:
     int search(vector<int>& v, int k) {
-        int n=v.size();
-        int i=0, j=n-1;
-        while(i<=j){
-            int m=(i+j) >> 1;
+        int n=v.size(); int l=0, r=n-1;
+        while(l<=r){
+            int m = (l+r) >> 1;
             if(v[m]==k) return m;
-            if(v[i]<=v[m]){
-                if(v[i]<=k and k<=v[m]) j=m-1;
-                else i = m+1;
+            if(v[l]<=v[m]){
+                if(v[l]<=k and k<=v[m]) r=m-1;
+                else l = m+1;
             }else{
-                if(k>=v[m] and k<=v[j]){
-                    i = m+1;
-                }else{
-                    j = m-1;
-                }
+                if(v[m]<=k and k<=v[r]) l = m+1;
+                else r = m-1;
             }
         }
         return -1;
