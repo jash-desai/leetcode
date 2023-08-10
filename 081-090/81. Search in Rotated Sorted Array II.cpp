@@ -5,7 +5,10 @@ public:
         while(l<=r){
             m = l + ((r-l) >> 1);
             if(v[m]==k) return true;
-            if(v[l] == v[m] and v[m]==v[r]){ l++, r--; continue;}
+            if(v[l] == v[m] and v[m]==v[r]){
+                l++, r--; 
+                continue;
+            }
             if(v[l] <= v[m]){
                 if(v[l] <= k and k < v[m]) r = m-1;
                 else l = m+1;
