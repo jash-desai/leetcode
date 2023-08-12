@@ -12,8 +12,8 @@ private:
 public:
     int uniquePathsWithObstacles(vector<vector<int>>&v) {
         int n = v.size(), m = v[0].size();
+        if(n==1 and m==1 and v[0][0]==0) return 1;
         /*
-        // if(n==1 and m==1 and v[0][0]==0) return 1;
         vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
         // return rec(n,m,v,dp);
         dp[1][1] = !(v[0][0]);
@@ -34,9 +34,9 @@ public:
             for(int j=1; j<=m; j++){
                 if(i==1 and j==1) continue;
                 if(v[i-1][j-1]!=0) continue;
-                int ans1 = prev[j];
-                int ans2 = curr[j-1];
-                curr[j] = (ans1+ans2);
+                // int ans1 = prev[j];
+                // int ans2 = curr[j-1];
+                curr[j] = (prev[j] + curr[j-1]);
             }
             prev = curr;
             curr.assign(m+1, 0);
