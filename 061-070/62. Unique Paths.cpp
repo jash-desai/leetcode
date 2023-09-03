@@ -9,8 +9,7 @@ private:
     //     return dp[n][m] = (ans1+ans2);
     // }
 public:
-    int uniquePaths(int m, int n){
-        swap(n,m); 
+    int uniquePaths(int n, int m){
         /*
         vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
         // return rec(n,m,dp);
@@ -24,7 +23,7 @@ public:
             }
         }
         return dp[n][m];
-        */
+        */ /*
         vector<int> prev(m+1,0), curr(m+1,0);
         curr[1]=1;
         for(int i=1; i<=n; i++){
@@ -37,14 +36,15 @@ public:
             prev=curr;
         }
         return prev[m];
-        /* Math - PnC
-        int N = n + m - 2;
-        int r = m - 1; 
+        */
+        /* Math - Combinatorics : */
+        int N = n+m-2;
+        int r = m-1; 
         double res = 1;
-        for (int i = 1; i <= r; i++){
+        for(int i = 1; i <= r; i++){
             res = res * (N - r + i) / i;
         }
         return (int)res;
-        */
+        // */
     }
 };

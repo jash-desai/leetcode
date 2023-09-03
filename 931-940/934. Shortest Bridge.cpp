@@ -1,38 +1,47 @@
 class Solution {
+    int dirs[5] = {-1, 0, 1, 0, -1};
 public:
-    int dir[5] = {0, 1, 0, -1, 0};
-    void paint(vector<vector<int>>&A, int i, int j, vector<pair<int, int>>&q) {
-        if (min(i, j) >= 0 && max(i, j) < A.size() && A[i][j] == 1) {
-            A[i][j] = 2;
-            q.push_back({i, j});
-            for (int d = 0; d < 4; ++d)
-                paint(A, i + dir[d], j + dir[d + 1], q);
-        }
-    }
-    int shortestBridge(vector<vector<int>>& A) {
-        vector<pair<int, int>> q;
-        for (int i = 0; q.size() == 0 && i < A.size(); ++i){
-            for (int j = 0; q.size() == 0 && j < A[0].size(); ++j){
-                paint(A, i, j, q);
+    int shortestBridge(vector<vector<int>>&v) {
+        int n = v.size(); queue<pair<int,int>> q; int sr, sc;
+        vector<vector<int>> dis(n, vector<int>(n, INT_MAX)); 
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(v[i][j]){
+                    sr = i, sc = j;
+                    break;
+                }
             }
         }
-        while (!q.empty()) {
-            vector<pair<int, int>> q1;
-            for (auto [i, j] : q) {
-                for (int d = 0; d < 4; ++d) {
-                    int x = i + dir[d], y = j + dir[d + 1];
-                    if (min(x, y) >= 0 && max(x, y) < A.size()) {
-                        if (A[x][y] == 1)
-                            return A[i][j] - 2;
-                        if (A[x][y] == 0) {
-                            A[x][y] = A[i][j] + 1;
-                            q1.push_back({x, y});
-                        }
+        q.push({sr, sc}); v[sr][sc] = 2; int ans = n;
+        while(q.size()){
+            auto [r,c] = q.front(); q.pop();
+            for(int i{0}; i<4; i++){
+                int nr = r + dirs[i], nc = c + dirs[i+1];
+                if(nr>=0 and nr<n and nc>=0 and nc<n){
+                    if(v[nr][nc] == 1){
+                        q.push({nr, nc}); v[nr][nc] = 2;
                     }
                 }
             }
-            swap(q, q1);
         }
-        return 0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(v[i][j]==1) q.push({i,j}), dis[i][j] = 0;
+            }
+        }
+        while(q.size()){
+            auto [r,c] = q.front(); q.pop();
+            for(int i{0}; i<4; i++){
+                int nr = r + dirs[i], nc = c + dirs[i+1];
+                if(nr>=0 and nr<n and nc>=0 and nc<n){
+                    if(v[nr][nc] != 1 and dis[nr][nc] > 1 + dis[r][c]){
+                        q.push({nr, nc}); 
+                        dis[nr][nc] = 1 + dis[r][c];
+                    }
+                }
+            }
+            if(v[r][c] == 2) ans = min(ans, dis[r][c]);
+        }
+        return ans-1;
     }
 };
