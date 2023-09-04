@@ -6,7 +6,8 @@ public:
         do{
             s = s->next;
             f = f->next->next;
+            if(!f or !f->next) return 0;
         }while(s!=f and f and f->next);
-        return (s==f) ? 1 : 0;
+        return 1;
     }
 };
