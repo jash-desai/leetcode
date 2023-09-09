@@ -17,8 +17,7 @@ public:
             long long int a = 0;
             for(int j=0; j<v.size(); j++){
                 if(i-v[j] >= 0) a += dp[i-v[j]];
-            }
-            dp[i] = a;
+            } dp[i] = a;
         }
         return dp[k];
     }
