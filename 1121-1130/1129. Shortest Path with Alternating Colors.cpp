@@ -1,36 +1,22 @@
-enum class Color { kInit, kRed, kBlue };
-
 class Solution {
- public:
-  vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& redEdges, vector<vector<int>>& blueEdges) {
-    vector<int> ans(n, -1);
-    vector<vector<pair<int, Color>>> graph(n);  // graph[u] := [(v, edgeColor)]
-    queue<pair<int, Color>> q{{{0, Color::kInit}}};  // [(u, prevColor)]
-
-    for (const vector<int>& edge : redEdges) {
-      const int u = edge[0];
-      const int v = edge[1];
-      graph[u].emplace_back(v, Color::kRed);
-    }
-
-    for (const vector<int>& edge : blueEdges) {
-      const int u = edge[0];
-      const int v = edge[1];
-      graph[u].emplace_back(v, Color::kBlue);
-    }
-
-    for (int step = 0; !q.empty(); ++step)
-      for (int sz = q.size(); sz > 0; --sz) {
-        const auto [u, prevColor] = q.front();
-        q.pop();
-        ans[u] = ans[u] == -1 ? step : ans[u];
-        for (auto& [v, edgeColor] : graph[u]) {
-          if (v == -1 || edgeColor == prevColor)
-            continue;
-          q.emplace(v, edgeColor);
-          v = -1;  // Mark (u, v) as used.
+public:
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>&re, vector<vector<int>>&be) {
+        vector<vector<pair<int, int>>> adj(n);
+        for(auto &m : re) adj[m[0]].push_back({m[1], 0});
+        for(auto &m : be) adj[m[0]].push_back({m[1], 1});
+        vector<int> dis(n, -1); queue<array<int, 3>> q;
+        vector<vector<bool>> vis(n, vector<bool>(2));
+        q.push({0, 0, -1}); vis[0][0] = vis[0][1] = true; dis[0] = 0;
+        while(!q.empty()) {
+            auto [u,d,f] = q.front(); q.pop();
+            for (auto& [v, c] : adj[u]) {
+                if (!vis[v][c] and c != f) {
+                    vis[v][c] = true;
+                    q.push({v, 1 + d, c});
+                    if (dis[v] == -1) dis[v] = 1 + d;
+                }
+            }
         }
-      }
-    return ans;
-  }
+        return dis;
+    }
 };
