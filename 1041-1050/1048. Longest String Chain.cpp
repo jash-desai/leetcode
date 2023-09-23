@@ -6,10 +6,10 @@ private:
         int i=0, j=0; int c = 0;
         while(i<n){
             if(j<m and a[i]==b[j]){
-                i++; j++;
+                i++, j++;
             }else{
                 if(c==1) return 0;
-                i++; c++;
+                i++, c++;
             }
         }
         return (i==n and j==m);
