@@ -1,4 +1,5 @@
 class Solution {
+    const int mod = 1e9+7;
 public:
     int numFactoredBinaryTrees(vector<int>& v) {
         int n=v.size();
@@ -19,13 +20,10 @@ public:
                     }
                 }
             }
-            it0->second += count;
-            
+            it0->second += count;   
         }
         long long int ans=0;
-        for(auto it=m.begin(); it!=m.end(); it++){
-            ans += it->second;
-        }
-        return ans%1000000007;
+        for(auto &[a, b] : m) ans = (ans+b)%mod;
+        return ans%mod;
     }
 };
